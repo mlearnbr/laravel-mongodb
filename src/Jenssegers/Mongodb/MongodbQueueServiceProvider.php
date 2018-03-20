@@ -13,7 +13,7 @@ class MongodbQueueServiceProvider extends QueueServiceProvider
     protected function registerFailedJobServices()
     {
         // Add compatible queue failer if mongodb is configured.
-        if (config('queue.failed.database') == 'mongodb') {
+        if (config('database.connections.' . config('queue.failed.database') . '.driver') == 'mongodb') {
             $this->app->singleton('queue.failer', function ($app) {
                 return new MongoFailedJobProvider($app['db'], config('queue.failed.database'), config('queue.failed.table'));
             });
